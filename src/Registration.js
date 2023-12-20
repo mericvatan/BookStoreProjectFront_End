@@ -9,6 +9,7 @@ export default function Registration(){
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmpassword, setConfirmPassword] = useState('')
+    const [userName, setUsername] = useState('')
 
     const handleSave = (e) => {
         e.preventDefault();
@@ -18,7 +19,8 @@ export default function Registration(){
             name: namesurname,
             email : email,
             password : password,
-            confirmpassword : confirmpassword
+            confirmpassword : confirmpassword,
+            userName:userName
         }
 
         axios.post(url, data)
@@ -29,7 +31,18 @@ export default function Registration(){
             
         })
         .catch((error) =>{
-            console.log(error);
+          if (error.response) {
+            // Sunucu tarafından dönen hata ayrıntıları
+            console.log("Error response from server:", error.response.data);
+            console.log("Status code:", error.response.status);
+            console.log("Headers:", error.response.headers); 
+        } else if (error.request) {
+            // İstek yapıldı, ancak hiçbir yanıt alınmadı
+            console.log("No response received:", error.request);
+        } else {
+            // İstek yapılırken bir hata oluştu
+            console.log("Error during request setup:", error.message);
+        }
         })
     }
 
@@ -59,7 +72,11 @@ export default function Registration(){
                   <input type="text" id="form3Example1cg" class="form-control form-control-lg" onChange={(e) => setNameSurname(e.target.value)} value={namesurname} />
                   <label class="form-label" for="form3Example1cg">Ad-Soyad</label>
                 </div>
-
+                <div class="form-outline mb-4">
+                  <input type="text" id="form3Example2cg" class="form-control form-control-lg" onChange={(e) => setUsername(e.target.value)} value={userName} />
+                  <label class="form-label" for="form3Example1cg">Kullanıcı Adı</label>
+                </div>
+               
                 <div class="form-outline mb-4">
                   <input type="email" id="form3Example3cg" class="form-control form-control-lg" 
                   onChange={(e) => setEmail(e.target.value)} value={email} />
