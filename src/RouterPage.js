@@ -8,7 +8,7 @@ export default function RouterPage(){
         <Router>
             <Routes>
             <Route exact path ='/Login' element = {<Login/>} />
-            <Route path = '/' element ={<Registration />} />
+            <Route path = '/Registration' element ={<Registration />} />
             </Routes>
         </Router>
     )
