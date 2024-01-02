@@ -17,7 +17,7 @@ function Login(){
             password : password,
 
         }
-        const url = 'http://localhost:5045/api/User/CreateUser';
+        const url = 'http://localhost:5045/api/Auth/Login';
         axios.post(url, data)
         .then((result) => {
             const dt = result.data;

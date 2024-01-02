@@ -7,40 +7,37 @@ function AnaSayfa() {
     fontSize: '18px',
     backgroundColor: 'transparent',
     color: 'white',
-    border: '2px solid white',
     transition: 'background-color 0.3s, color 0.3s', // Hover efekti için geçiş süresi ekleniyor
   };
 
-  const customButtonHoverStyle = {
-    backgroundColor: 'white',
-    color: 'black',
-  };
+
 
   return (
     <div className="container mt-5">
       {/* Tab bölümü */}
-      <div className="row mb-4">
-        <div className="col-md-6"></div>
-        <div className="col-md-6 text-end">
+      <div className="row mb-4 " >
+        <div className="col-md-6 "></div>
+        <div className="col-md-6 position-absolute top-0 end-0" style={{ paddingTop: '1rem', paddingLeft:"20rem" }}>
           <Tab.Container>
             <Nav>
               <Nav.Item>
                 <Nav.Link
                   as={Link}
                   to="/Login"
-                  style={customButtonStyle}
+                  style={{...customButtonStyle}}
                   className="me-2"
                 >
-                  Giriş Yap
+                  <button type="button" class="btn btn-outline-secondary">Giriş Yap</button>
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link
                   as={Link}
                   to="/Registration"
-                  style={{ ...customButtonStyle, ...customButtonHoverStyle }}
+                  style={{ ...customButtonStyle }}
                 >
-                  Üye Ol
+                  <button type="button" class="btn btn-outline-secondary">Üye Ol</button>
+
                 </Nav.Link>
               </Nav.Item>
             </Nav>
