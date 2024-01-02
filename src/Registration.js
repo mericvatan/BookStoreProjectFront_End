@@ -28,7 +28,7 @@ export default function Registration(){
         .then((result) => {
             clear();
             const dt = result.data;
-            alert(dt.statusMessage);
+            alert("Kullanıcı Oluşturuldu!");
             
         })
         .catch((error) =>{

@@ -7,6 +7,7 @@ function AnaSayfa() {
     fontSize: '18px',
     backgroundColor: 'transparent',
     color: 'white',
+    
     transition: 'background-color 0.3s, color 0.3s', // Hover efekti için geçiş süresi ekleniyor
   };
 
@@ -17,14 +18,14 @@ function AnaSayfa() {
       {/* Tab bölümü */}
       <div className="row mb-4 " >
         <div className="col-md-6 "></div>
-        <div className="col-md-6 position-absolute top-0 end-0" style={{ paddingTop: '1rem', paddingLeft:"20rem" }}>
+        <div className="col-md-6 position-absolute top-0 end-0" style={{ paddingTop: '1rem', paddingLeft:"25rem"}}>
           <Tab.Container>
             <Nav>
               <Nav.Item>
                 <Nav.Link
                   as={Link}
                   to="/Login"
-                  style={{...customButtonStyle}}
+                  style={{...customButtonStyle,}}
                   className="me-2"
                 >
                   <button type="button" class="btn btn-outline-secondary">Giriş Yap</button>

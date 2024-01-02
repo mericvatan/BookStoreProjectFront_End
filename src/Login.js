@@ -21,7 +21,7 @@ function Login(){
         axios.post(url, data)
         .then((result) => {
             const dt = result.data;
-            alert(dt.statusMessage);
+            alert("Giriş Yapıldı!");
             // Giriş başarılı olduğunda ana ekrana yönlendir
             navigate('/');
         })
