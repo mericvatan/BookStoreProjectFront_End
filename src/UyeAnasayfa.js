@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Tab, Nav } from 'react-bootstrap';
 
-function AnaSayfa() {
+function UyeAnasayfa() {
   const customButtonStyle = {
     fontSize: '18px',
     backgroundColor: 'transparent',
@@ -24,23 +24,23 @@ function AnaSayfa() {
               <Nav.Item>
                 <Nav.Link
                   as={Link}
-                  to="/Login"
                   style={{...customButtonStyle,}}
                   className="me-2"
                 >
-                  <button type="button" class="btn btn-outline-secondary">Giriş Yap</button>
+                  <button type="button" class="btn btn-outline-secondary">Hesabım</button>
                 </Nav.Link>
-              </Nav.Item>
+              </Nav.Item>  
               <Nav.Item>
                 <Nav.Link
                   as={Link}
-                  to="/Registration"
-                  style={{ ...customButtonStyle }}
+                  to="/"
+                  style={{...customButtonStyle,}}
+                  className="me-2"
                 >
-                  <button type="button" class="btn btn-outline-secondary">Üye Ol</button>
-
+                  <button type="button" class="btn btn-outline-secondary">Çıkış Yap</button>
                 </Nav.Link>
               </Nav.Item>
+
             </Nav>
           </Tab.Container>
         </div>
@@ -51,7 +51,8 @@ function AnaSayfa() {
         <div className="col">
           <h1 className="display-2 fw-bold">Kitapyurdu.com</h1>
           <p className="lead">
-            Hoşgeldiniz! Hesabınız yoksa, hemen üye olun ve avantajlı tekliflerden faydalanarak alışveriş yapın.
+            Hoş Geldiniz Üyemiz! Kitaplar arasında gezinerek istediğiniz kitabı
+            bulabilir ve hemen sipariş verebilirsiniz.
           </p>
         </div>
       </div>
@@ -59,4 +60,4 @@ function AnaSayfa() {
   );
 }
 
-export default AnaSayfa;
+export default UyeAnasayfa;

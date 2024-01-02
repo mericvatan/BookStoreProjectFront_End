@@ -27,12 +27,22 @@ function Login(){
             const dt = result.data;
             toast.success('Giriş Yapıldı!');
             // Giriş başarılı olduğunda ana ekrana yönlendir
-            navigate('/');
+            navigate('/UyeAnasayfa');
         })
-        .catch((error) =>{
-            toast.error('Giriş başarısız!');
-            console.log(error);
-        })
+        .catch((error) => {
+          if (error.response && error.response.data && error.response.data.errors) {
+              // Sunucu tarafından gönderilen hataları alın
+              const errors = error.response.data.errors;
+              // Hata mesajlarını Toast ile gösterin
+              errors.forEach(err => {
+                  toast.error(err);
+              });
+          } else {
+              // İstek yapılırken bir hata oluştu
+              toast.error('Bir hata oluştu. Lütfen tekrar deneyin.');
+              console.log(error);
+          }
+      });
     }
 
     const handleRegistr = () => {
