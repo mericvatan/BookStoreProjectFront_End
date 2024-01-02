@@ -2,6 +2,10 @@ import React , { useState }from 'react';
 import { useNavigate } from 'react-router-dom'; // useNavigate hook'unu import et
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
+import { toast , ToastContainer  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 function Login(){
     const navigate = useNavigate(); // useNavigate hook'unu kullanarak geçmiş nesnesini al
@@ -21,11 +25,12 @@ function Login(){
         axios.post(url, data)
         .then((result) => {
             const dt = result.data;
-            alert("Giriş Yapıldı!");
+            toast.success('Giriş Yapıldı!');
             // Giriş başarılı olduğunda ana ekrana yönlendir
             navigate('/');
         })
         .catch((error) =>{
+            toast.error('Giriş başarısız!');
             console.log(error);
         })
     }
@@ -83,7 +88,7 @@ function Login(){
 
 
               </form>
-
+              <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
             </div>
           </div>
         </div>

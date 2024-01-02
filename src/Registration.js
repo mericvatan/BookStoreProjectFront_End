@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { toast , ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import axios from "axios";
 
@@ -28,23 +30,23 @@ export default function Registration(){
         .then((result) => {
             clear();
             const dt = result.data;
-            alert("Kullanıcı Oluşturuldu!");
+            toast.success('Kayıt Başarılı!');
             
         })
-        .catch((error) =>{
-          if (error.response) {
-            // Sunucu tarafından dönen hata ayrıntıları
-            console.log("Error response from server:", error.response.data);
-            console.log("Status code:", error.response.status);
-            console.log("Headers:", error.response.headers); 
-        } else if (error.request) {
-            // İstek yapıldı, ancak hiçbir yanıt alınmadı
-            console.log("No response received:", error.request);
-        } else {
-            // İstek yapılırken bir hata oluştu
-            console.log("Error during request setup:", error.message);
-        }
-        })
+        .catch((error) => {
+          if (error.response && error.response.data && error.response.data.errors) {
+              // Sunucu tarafından gönderilen hataları alın
+              const errors = error.response.data.errors;
+              // Hata mesajlarını Toast ile gösterin
+              errors.forEach(err => {
+                  toast.error(err);
+              });
+          } else {
+              // İstek yapılırken bir hata oluştu
+              toast.error('Bir hata oluştu. Lütfen tekrar deneyin.');
+              console.log(error);
+          }
+      });
     }
 
     const handleLogin = () => {
@@ -104,6 +106,7 @@ export default function Registration(){
                 <p className="text-center text-muted mt-5 mb-0">Zaten hesabın var mı? <a href="#!" className="fw-bold text-body" onClick={(e) => handleLogin(e)}><u>Giriş Yap</u></a></p>
 
               </form>
+              <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
 
             </div>
           </div>
