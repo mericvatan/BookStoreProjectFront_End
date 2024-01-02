@@ -1,9 +1,10 @@
 import React , { useState }from 'react';
-import { Form, Input, Button } from "antd";
+import { useNavigate } from 'react-router-dom'; // useNavigate hook'unu import et
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
 function Login(){
+    const navigate = useNavigate(); // useNavigate hook'unu kullanarak geçmiş nesnesini al
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -21,7 +22,8 @@ function Login(){
         .then((result) => {
             const dt = result.data;
             alert(dt.statusMessage);
-            
+            // Giriş başarılı olduğunda ana ekrana yönlendir
+            navigate('/');
         })
         .catch((error) =>{
             console.log(error);
@@ -29,8 +31,8 @@ function Login(){
     }
 
     const handleRegistr = () => {
-      window.location.href = "/#!";
-  }
+      window.location.href = "/registration";
+    }
 
     return(
          <div class="mask d-flex align-items-center h-100 gradient-custom-3">
