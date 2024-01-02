@@ -78,12 +78,10 @@ export default function Registration(){
                   <label class="form-label" for="form3Example4cdg">Şifre tekrar</label>
                 </div>
 
-            cd cd 
-
                 <div class="d-flex justify-content-center">
                   <button type="button"
                     class="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onClick={(e) => handleSave(e)}>Kaydol</button>
-                </div>n
+                </div>
 
                 <p className="text-center text-muted mt-5 mb-0">Zaten hesabın var mı? <a href="#!" className="fw-bold text-body" onClick={(e) => handleLogin(e)}><u>Giriş Yap</u></a></p>
 

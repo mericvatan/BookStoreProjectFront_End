@@ -66,7 +66,7 @@ function Login(){
 
                 <div class="col">
 
-                    <a href="#!">Şifreni mi Unuttun</a>
+                    <a href="#!">Şifremi Unuttun</a>
                   </div>
                 </div>
 
