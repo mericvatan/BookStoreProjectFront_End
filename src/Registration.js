@@ -71,32 +71,61 @@ export default function Registration(){
 
               <form>
 
-                <div className="form-outline mb-4">
-                  <input type="text" id="form3Example1cg" className="form-control form-control-lg" onChange={(e) => setNameSurname(e.target.value)} value={namesurname} />
+              <div className="form-floating mb-4">
+                  <input
+                    type="text"
+                    id="form3Example1cg"
+                    className="form-control form-control-lg"
+                    onChange={(e) => setNameSurname(e.target.value)}
+                    value={namesurname}
+                  />
                   <label className="form-label" htmlFor="form3Example1cg">Ad-Soyad</label>
                 </div>
-                <div className="form-outline mb-4">
-                  <input type="text" id="form3Example2cg" className="form-control form-control-lg" onChange={(e) => setUsername(e.target.value)} value={userName} />
+
+                <div className="form-floating mb-4">
+                  <input
+                    type="text"
+                    id="form3Example2cg"
+                    className="form-control form-control-lg"
+                    onChange={(e) => setUsername(e.target.value)}
+                    value={userName}
+                  />
                   <label className="form-label" htmlFor="form3Example1cg">Kullanıcı Adı</label>
                 </div>
 
-                <div className="form-outline mb-4">
-                  <input type="email" id="form3Example3cg" className="form-control form-control-lg" 
-                  onChange={(e) => setEmail(e.target.value)} value={email} />
+                <div className="form-floating mb-4">
+                  <input
+                    type="email"
+                    id="form3Example3cg"
+                    className="form-control form-control-lg"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                  />
                   <label className="form-label" htmlFor="form3Example3cg">E-posta</label>
                 </div>
 
-                <div className="form-outline mb-4">
-                  <input type="password" id="form3Example4cg" className="form-control form-control-lg" 
-                  onChange={(e) => setPassword(e.target.value)} value={password} />
+                <div className="form-floating mb-4">
+                  <input
+                    type="password"
+                    id="form3Example4cg"
+                    className="form-control form-control-lg"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                  />
                   <label className="form-label" htmlFor="form3Example4cg">Şifre</label>
                 </div>
 
-                <div className="form-outline mb-4">
-                  <input type="password" id="form3Example4cdg" className="form-control form-control-lg" 
-                  onChange={(e) => setConfirmPassword(e.target.value)} value={confirmpassword}/>
-                  <label className="form-label" htmlFor="form3Example4cdg">Şifre tekrar</label>
+                <div className="form-floating mb-4">
+                  <input
+                    type="password"
+                    id="form3Example4cg"
+                    className="form-control form-control-lg"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    value={confirmpassword}
+                  />
+                  <label className="form-label" htmlFor="form3Example4cg">Şifre tekrar</label>
                 </div>
+
 
                 <div className="d-flex justify-content-center">
                   <button type="button"

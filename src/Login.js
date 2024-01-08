@@ -49,6 +49,8 @@ function Login(){
       window.location.href = "/registration";
     }
 
+  
+
     return(
          <div class="mask d-flex align-items-center h-100 gradient-custom-3">
     <div class="container h-100">
@@ -60,17 +62,28 @@ function Login(){
 
               <form>
 
-                <div class="form-outline mb-4">
-                  <input type="email" id="form3Example3cg" class="form-control form-control-lg" 
-                  onChange={(e) => setEmail(e.target.value)} value={email} />
-                  <label class="form-label" for="form3Example3cg">E-posta</label>
+              <div className="form-floating mb-4">
+                  <input
+                    type="email"
+                    id="form3Example3cg"
+                    className="form-control form-control-lg"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                  />
+                  <label htmlFor="form3Example3cg">E-posta</label>
                 </div>
 
-                <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4cg" class="form-control form-control-lg" 
-                  onChange={(e) => setPassword(e.target.value)} value={password} />
-                  <label class="form-label" for="form3Example4cg">Şifre</label>
+                <div className="form-floating mb-4">
+                  <input
+                    type="password"
+                    id="form3Example4cg"
+                    className="form-control form-control-lg"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                  />
+                  <label htmlFor="form3Example4cg">Şifre</label>
                 </div>
+                
                 <div class="row mb-4">
                   <div class="col d-flex justify-content-center">
                     <div class="form-check">
@@ -81,7 +94,7 @@ function Login(){
 
                 <div class="col">
 
-                    <a href="#!">Şifremi Unuttun</a>
+                    <a href="#!">Şifremi Unuttum</a>
                   </div>
                 </div>
 
@@ -91,10 +104,7 @@ function Login(){
                 </div>
 
                 
-                <div class="text-center" >
-                <p>Hesabın yoksa <a href="#!"onClick={(e) => handleRegistr(e)}>Üye Ol</a></p>
-                </div>
-
+                <p className="text-center text-muted mt-5 mb-0">Hesabın yoksa <a href="#!" className="fw-bold text-body" onClick={(e) => handleRegistr(e)}><u>Üye Ol</u></a></p>
 
 
               </form>
