@@ -20,7 +20,7 @@ function Products() {
 
   return (
     <div>
-      <h2 class="text-uppercase text-center mb-5">Yeni Gelenler</h2>
+      <h2 class="text-uppercase text-center mb-5">Kitaplar</h2>
       <div className="row">
         {products.map((product) => (
           <div key={product.id} className="col-md-4 mb-4">

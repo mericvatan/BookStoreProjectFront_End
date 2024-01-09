@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Tab, Nav } from 'react-bootstrap';
-import { AppBar, Toolbar, IconButton, Typography, InputBase, alpha } from '@mui/material';
+import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText, InputBase, alpha } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/system';
 import Products from './Products.js';
 
+const CustomDrawer = styled(Drawer)({
+  '& .MuiDrawer-paper': {
+    width: '250px',
+  },
+});
 
 const theme = createTheme({
   palette: {
@@ -55,14 +60,23 @@ const customButtonStyle = {
 };
 
 function AnaSayfa() {
-  
+
+  const [openDrawer, setOpenDrawer] = useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpenDrawer(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpenDrawer(false);
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <div>
         <AppBar position="static">
           <Toolbar>
-            <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }}>
+          <IconButton size="large" edge="start" color="inherit" aria-label="open drawer" sx={{ mr: 2 }} onClick={handleDrawerOpen}>
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
@@ -94,6 +108,51 @@ function AnaSayfa() {
             </div>
           </Toolbar>
         </AppBar>
+
+        {/* Drawer (Menü) */}
+        <CustomDrawer anchor="left" open={openDrawer} onClose={handleDrawerClose}>
+          <List>
+            {/* Menü öğelerini buraya ekleyin */}
+            <ListItem button component={Link} to="/kategori2" onClick={handleDrawerClose}>
+              <ListItemText>
+                <Typography variant="body1" fontWeight="bold">
+                  Yeni Gelenler
+                </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem button component={Link} to="/kategori2" onClick={handleDrawerClose}>
+              <ListItemText>
+                <Typography variant="body1" fontWeight="bold">
+                  Çok Satanlar
+                </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem button component={Link} to="/kategori2" onClick={handleDrawerClose}>
+              <ListItemText>
+                <Typography variant="body1" fontWeight="bold">
+                  Edebiyat
+                </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem button component={Link} to="/kategori2" onClick={handleDrawerClose}>
+              <ListItemText>
+                <Typography variant="body1" fontWeight="bold">
+                  Roman
+                </Typography>
+              </ListItemText>
+            </ListItem>
+            <ListItem button component={Link} to="/kategori2" onClick={handleDrawerClose}>
+              <ListItemText>
+                <Typography variant="body1" fontWeight="bold">
+                  Kişisel Gelişim
+                </Typography>
+              </ListItemText>
+            </ListItem>
+
+          </List>
+        </CustomDrawer>
+
+        
 
         {/* Ana bölüm */}
         <div className="container mt-5">
