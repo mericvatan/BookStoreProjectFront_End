@@ -5,16 +5,16 @@ function Products() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    // Backend'ten ürünleri getir
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5045/api/Product/All'); // Örnek bir endpoint
-        setProducts(response.data);
+        const response = await axios.get('http://localhost:5045/api/Product/All');
+        const productList = response.data.data; // Burada "data" nesnesine göre güncelleme yapın
+        setProducts(productList);
       } catch (error) {
         console.error('Ürünleri getirirken bir hata oluştu:', error);
       }
     };
-
+  
     fetchProducts();
   }, []);
 
