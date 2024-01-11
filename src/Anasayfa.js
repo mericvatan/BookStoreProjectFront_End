@@ -70,8 +70,27 @@ const customButtonStyle = {
 };
 
 function AnaSayfa() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const [categories, setCategories] = useState([]);
   const [openDrawer, setOpenDrawer] = useState(false);
+
+  const handleInputChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearchButtonClick = () => {
+    handleSearch(searchTerm);
+  };
+
+  const handleSearch = async (name) => {
+    try {
+      const response = await axios.get(`http://localhost:5045/api/Product/GetProductByName/${name}`);
+      setSearchResults(response.data.data);
+    } catch (error) {
+      console.error('Ürünleri ararken bir hata oluştu:', error);
+    }
+  };
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
@@ -114,7 +133,15 @@ function AnaSayfa() {
             </Typography>
             <Search>
               <SearchIcon style={{ marginRight: '8px' }} />
-              <StyledInputBase placeholder="Kitap Adı veya Yazar Ara" inputProps={{ 'aria-label': 'search' }} />
+              <StyledInputBase
+                placeholder="Kitap Adı veya Yazar Ara"
+                inputProps={{ 'aria-label': 'search' }}
+                value={searchTerm}
+                onChange={handleInputChange}
+              />
+              <button type="button" onClick={handleSearchButtonClick}>
+                Ara
+              </button>
             </Search>
             <div style={{ marginLeft: 'auto' }}>
               <Tab.Container>
