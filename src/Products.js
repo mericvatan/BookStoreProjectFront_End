@@ -9,6 +9,8 @@ import img6 from "./wwwroot/uploads/img1.jpeg";
 
 function Products() {
   const [products, setProducts] = useState([]);
+
+  const imgpath = "src/wwwroot/uploads/"
   
 
   const imagesList = [
@@ -42,7 +44,7 @@ function Products() {
                 <p className="card-text">{product.price}</p>
                 {/* <img src={imagesList[0]} alt={imagesList.alt} width={100} height={190} /> */}
 
-                <img  src={imagesList[0]} width={100} height={190}/>
+                <img  src={imgpath+product.imgurl+"jpeg"} width={100} height={190}/>
               </div>
             </div>
           </div>
