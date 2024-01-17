@@ -55,7 +55,7 @@ function Login(){
          <div class="mask d-flex align-items-center h-100 gradient-custom-3">
     <div class="container h-100">
       <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6" style={{padding: "50px"}}>
           <div class="card" style={{borderRadius: '15px'}}>
             <div class="card-body p-5">
               <h2 class="text-uppercase text-center mb-5">Giriş Yap</h2>

@@ -25,12 +25,12 @@ function Products() {
        
         {products.map((product) => (
           
-          <div key={product.id} className="col-md-4 mb-4">
-            <div className="card">
+          <div key={product.id} className="col-md-3 mb-2">
+            <div className="card" style={{ backgroundColor: 'rgba(128, 128, 128, 0.1)' }}> 
               <div className="card-body"> 
-                <h5 className="card-title">{product.name}</h5>
-                <p className="card-text">{product.price}</p>
                 <img src={`data:image/jpeg;base64, ${product.imageUrl}`} width={100} height={190} />
+                <h5 className="card-title">{product.name}</h5>
+                <p className="card-text">{product.price} TL</p>
               </div>
             </div>
           

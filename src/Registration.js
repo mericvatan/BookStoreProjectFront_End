@@ -4,6 +4,7 @@ import { toast , ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import axios from "axios";
+import { Padding } from '@mui/icons-material';
 
 export default function Registration(){
 
@@ -64,7 +65,7 @@ export default function Registration(){
   <div className="mask d-flex align-items-center h-100 gradient-custom-3">
     <div className="container h-100">
       <div className="row d-flex justify-content-center align-items-center h-100">
-        <div className="col-12 col-md-9 col-lg-7 col-xl-6">
+        <div className="col-12 col-md-9 col-lg-7 col-xl-6" style={{padding: "50px"}}>
           <div className="card" style={{borderRadius: '15px'}}>
             <div className="card-body p-5">
               <h2 className="text-uppercase text-center mb-5">Hesap Oluştur</h2>
