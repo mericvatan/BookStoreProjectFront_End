@@ -21,9 +21,7 @@ function Products() {
 
   return (
     <div>
-      <h2 className="text-uppercase text-center mb-5">Kitaplar</h2>
       <div className="row">
-       
         {products.map((product) => (
           <div key={product.id} className="col-md-3 mb-2">
             {/* Link ekleyin */}

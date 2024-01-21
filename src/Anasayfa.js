@@ -90,7 +90,12 @@ function AnaSayfa() {
   const handleSearch = async (keyword) => {
     try {
       const response = await axios.get(`http://localhost:5045/api/Product/GetProductByKeyword/${keyword}`);
-      setSearchResults(response.data.data);
+      
+      if (response.data.success) {
+        setSearchResults(response.data.data);
+      } else {
+        console.error('Ürünleri ararken bir hata oluştu:', response.data.message);
+      }
     } catch (error) {
       console.error('Ürünleri ararken bir hata oluştu:', error);
     }
