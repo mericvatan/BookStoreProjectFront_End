@@ -19,7 +19,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/system';
 import Products from './Products.js';
-import SearchProducts from './SearchProducts.js';
+
 
 
 
@@ -90,16 +90,12 @@ function AnaSayfa() {
   const handleSearch = async (keyword) => {
     try {
       const response = await axios.get(`http://localhost:5045/api/Product/GetProductByKeyword/${keyword}`);
-      
-      if (response.data.success) {
-        setSearchResults(response.data.data);
-      } else {
-        console.error('Ürünleri ararken bir hata oluştu:', response.data.message);
-      }
+      setSearchResults(response.data.data);
+
     } catch (error) {
       console.error('Ürünleri ararken bir hata oluştu:', error);
     }
-  };
+  } 
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
@@ -196,19 +192,43 @@ function AnaSayfa() {
               <p className="lead">
                 Hoşgeldiniz! Hesabınız yoksa, hemen üye olun ve avantajlı tekliflerden faydalanarak alışveriş yapın.
               </p>
+
+
               <div className="Products">
-                {/* Arama Sonuçlarını Göster */}
-                {searchResults.length > 0 ? (
-                  searchResults.map((product) => (
-                    <div key={product.id} className="col-md-3 mb-2">
-                      {/* SearchProducts bileşenini burada kullanabilirsiniz ve searchResults'ı prop olarak geçmelisiniz */}
-                      <SearchProducts product={product} />
-                    </div>
-                  ))
-                ) : (
-                  /* Tüm Ürünleri Göster */
+                {/* Arama Sonucu Göster */}
+                {searchTerm && (
+                  <div className="row">
+                    {searchResults.length > 0 ? (
+                      // Eğer arama sonucu bulunmuşsa, ürünleri map fonksiyonu ile göster
+                      searchResults.map((product) => (
+                        <div key={product.id} className="col-md-3 mb-2">
+                          {/* Direkt ürün bilgilerini göster */}
+                          <Link to={`/product/${product.id}`} style={{ textDecoration: 'none' }}>
+                            <div className="card" style={{ backgroundColor: 'rgba(128, 128, 128, 0.1)' }}>
+                              <div className="card-body">
+                                <img src={`data:image/jpeg;base64, ${product.imageUrl}`} width={100} height={190} alt={product.name} />
+                                <h5 className="card-title">{product.name}</h5>
+                                <p className="card-text">{product.price} TL</p>
+                              </div>
+                            </div>
+                          </Link>
+                        </div>
+                      ))
+                    ) : (
+                      // Eğer arama sonucu bulunamamışsa, sadece backend'den gelen hata mesajını göster
+                      <div className="col">
+                        <p>{searchResults.message}</p>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Tüm Ürünleri Göster */}
+                {!searchTerm && (
                   <Products />
                 )}
+                
+                
               </div>
             </div>
           </div>
