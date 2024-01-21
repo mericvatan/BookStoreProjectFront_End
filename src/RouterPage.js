@@ -4,6 +4,10 @@ import AnaSayfa from './Anasayfa'; // AnaSayfa'yı import et
 import Login from './Login';
 import Registration from './Registration';
 import UyeAnasayfa from './UyeAnasayfa';
+import ProductDetails from "./ProductDetails";
+import CategoryPage from './CategoryPage';
+
+
 
 
 function RouterPage() {
@@ -14,6 +18,8 @@ function RouterPage() {
         <Route path="/Login" element={<Login />} />
         <Route path="/Registration" element={<Registration />} />
         <Route path="/UyeAnasayfa" element={<UyeAnasayfa />} />
+        <Route path="/product/:id" component={<ProductDetails/>} />
+        <Route path="/category/:categoryId" component={<CategoryPage/>} />
       </Routes>
     </Router>
   );
