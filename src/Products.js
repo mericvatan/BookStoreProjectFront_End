@@ -8,10 +8,8 @@ function Products() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5045/api/Product/All"
-        );
-        const productList = response.data.data; // Burada "data" nesnesine göre güncelleme yapın
+        const response = await axios.get("http://localhost:5045/api/Product/All");
+        const productList = response.data.data; // "data" nesnesine göre güncelleme yapın
         setProducts(productList);
       } catch (error) {
         console.error("Ürünleri getirirken bir hata oluştu:", error);
@@ -25,6 +23,7 @@ function Products() {
     <div>
       <h2 className="text-uppercase text-center mb-5">Kitaplar</h2>
       <div className="row">
+       
         {products.map((product) => (
           <div key={product.id} className="col-md-3 mb-2">
             {/* Link ekleyin */}

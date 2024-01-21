@@ -96,7 +96,6 @@ function AnaSayfa() {
     }
   };
 
-
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
   };
@@ -104,7 +103,6 @@ function AnaSayfa() {
   const handleDrawerClose = () => {
     setOpenDrawer(false);
   };
-
 
   useEffect(() => {
     const fetchCategory = async () => {
