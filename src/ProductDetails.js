@@ -8,21 +8,16 @@ function ProductDetails() {
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    const fetchAllProducts = async () => {
+    const fetchProduct  = async () => {
       try {
-        const response = await axios.get("http://localhost:5045/api/Product/All");
-        const productList = response.data.data;
-        
-        // Belirli bir ID'ye sahip ürünü filtrele
-        const selectedProduct = productList.find(product => product.id === parseInt(id, 10));
-
-        setProduct(selectedProduct);
+        const response = await axios.get('http://localhost:5045/api/Product/GetProductById/${id}');
+        setProduct(response.data.data);
       } catch (error) {
         console.error("Ürünleri getirirken bir hata oluştu:", error);
       }
     };
 
-    fetchAllProducts();
+    fetchProduct();
   }, [id]);
 
   if (!product) {

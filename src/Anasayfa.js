@@ -77,6 +77,7 @@ function AnaSayfa() {
   const [searchResults, setSearchResults] = useState([]);
   const [categories, setCategories] = useState([]);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [error, setError] = useState('');
 
 
   const handleInputChange = (e) => {
@@ -91,9 +92,10 @@ function AnaSayfa() {
     try {
       const response = await axios.get(`http://localhost:5045/api/Product/GetProductByKeyword/${keyword}`);
       setSearchResults(response.data.data);
-
+      setError(''); // Başarılı bir arama olduğunda hata durumunu temizle
     } catch (error) {
       console.error('Ürünleri ararken bir hata oluştu:', error);
+      setError(error.mesage);// backend'den gelen hata mesajını error state'ine ata
     }
   } 
 
@@ -103,6 +105,12 @@ function AnaSayfa() {
 
   const handleDrawerClose = () => {
     setOpenDrawer(false);
+  };
+
+  const handleCategoryClick = (categoryId) => {
+    // Kategoriye tıklanınca yapılacak işlemler burada
+    // Örneğin, ilgili kategori sayfasına yönlendirme
+    handleDrawerClose(); // Menüyü kapat
   };
 
   useEffect(() => {
@@ -174,7 +182,7 @@ function AnaSayfa() {
         <CustomDrawer anchor="left" open={openDrawer} onClose={handleDrawerClose}>
           <List>
             {categories.map((category) => (
-              <ListItem key={category.id} button component={Link} to={`/category/${category.id}`} onClick={handleDrawerClose}>
+              <ListItem key={category.id} button component={Link} to={`/category/${category.id}`} onClick={() => handleCategoryClick(category.id)}>
                 <ListItemText>
                   <Typography variant="body1" fontWeight="bold">
                     {category.name}
@@ -217,7 +225,7 @@ function AnaSayfa() {
                     ) : (
                       // Eğer arama sonucu bulunamamışsa, sadece backend'den gelen hata mesajını göster
                       <div className="col">
-                        <p>{searchResults.message}</p>
+                          {error && <p>{error}</p>}
                       </div>
                     )}
                   </div>

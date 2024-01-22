@@ -18,8 +18,8 @@ function RouterPage() {
         <Route path="/Login" element={<Login />} />
         <Route path="/Registration" element={<Registration />} />
         <Route path="/UyeAnasayfa" element={<UyeAnasayfa />} />
-        <Route path="/product/:id" component={<ProductDetails/>} />
-        <Route path="/category/:categoryId" component={<CategoryPage/>} />
+        <Route path="/product/:id" element={<ProductDetails/>} />
+        <Route path="/category/:categoryId" element={<CategoryPage/>} />
       </Routes>
     </Router>
   );
