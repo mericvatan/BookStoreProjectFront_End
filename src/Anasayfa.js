@@ -91,13 +91,28 @@ function AnaSayfa() {
   const handleSearch = async (keyword) => {
     try {
       const response = await axios.get(`http://localhost:5045/api/Product/GetProductByKeyword/${keyword}`);
-      setSearchResults(response.data.data);
-      setError(''); // Başarılı bir arama olduğunda hata durumunu temizle
+    
+      // İsteğin başarılı olup olmadığını kontrol et
+      if (response && response.data) {
+        const searchResults = response.data.data;
+        setSearchResults(searchResults);
+        setError(''); // Başarılı bir arama olduğunda hata durumunu temizle
+      } else {
+        // Backend'den gelen tek bir hata mesajını kontrol et
+        const errorMessage = response.data.message;
+        setError(errorMessage || 'İstek başarısız oldu. Lütfen tekrar deneyin.');
+      }
     } catch (error) {
-      console.error('Ürünleri ararken bir hata oluştu:', error);
-      setError(error.mesage);// backend'den gelen hata mesajını error state'ine ata
+      // Hata durumu kontrolü
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data;
+        setError(errorMessage);
+      } else {
+        setError('Arama sırasında bir hata oluştu. Lütfen tekrar deneyin.');
+        console.error(error);
+      }
     }
-  } 
+  };
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
@@ -201,7 +216,6 @@ function AnaSayfa() {
                 Hoşgeldiniz! Hesabınız yoksa, hemen üye olun ve avantajlı tekliflerden faydalanarak alışveriş yapın.
               </p>
 
-
               <div className="Products">
                 {/* Arama Sonucu Göster */}
                 {searchTerm && (
@@ -225,7 +239,9 @@ function AnaSayfa() {
                     ) : (
                       // Eğer arama sonucu bulunamamışsa, sadece backend'den gelen hata mesajını göster
                       <div className="col">
-                          {error && <p>{error}</p>}
+                        {error && (
+                          <p>{error}</p>
+                        )}
                       </div>
                     )}
                   </div>
@@ -235,8 +251,6 @@ function AnaSayfa() {
                 {!searchTerm && (
                   <Products />
                 )}
-                
-                
               </div>
             </div>
           </div>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Tab, Nav } from 'react-bootstrap';
 import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText, InputBase, alpha } from '@mui/material';
@@ -7,6 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/system';
 import Products from './Products.js';
+
 
 const CustomDrawer = styled(Drawer)({
   '& .MuiDrawer-paper': {
@@ -60,8 +62,39 @@ const customButtonStyle = {
 };
 
 function UyeAnaSayfa() {
-
+  const [categories, setCategories] = useState([]);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [error, setError] = useState('');
+
+  const handleInputChange = (e) => {
+    const newSearchTerm = e.target.value;
+    setSearchTerm(newSearchTerm);
+
+    // Her karakter girişinde arama işlemini başlat
+    handleSearch(newSearchTerm);
+  };
+
+  const handleSearch = async (keyword) => {
+    try {
+      const response = await axios.get(`http://localhost:5045/api/Product/GetProductByKeyword/${keyword}`);
+      
+      // İsteğin başarılı olup olmadığını kontrol et
+      if (response) {
+        const searchResults = response.data.data;
+        setSearchResults(searchResults);
+        setError(''); // Başarılı bir arama olduğunda hata durumunu temizle
+      } else {
+        // Başarısız istek durumunda bir şeyler yapabilirsiniz
+        console.error('İstek başarısız oldu:', response);
+      }
+    } catch (error) {
+        const errorMessage = error.response?.data ??
+        setError(errorMessage);
+    }
+  };
+
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
@@ -70,6 +103,25 @@ function UyeAnaSayfa() {
   const handleDrawerClose = () => {
     setOpenDrawer(false);
   };
+
+  const handleCategoryClick = (categoryId) => {
+    // Kategoriye tıklanınca yapılacak işlemler burada
+    // Örneğin, ilgili kategori sayfasına yönlendirme
+    handleDrawerClose(); // Menüyü kapat
+  };
+
+  useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const response = await axios.get('http://localhost:5045/api/Category');
+        const CategoryList = response.data.data;
+        setCategories(CategoryList);
+      } catch (error) {
+        console.error('Kategorileri getirirken bir hata oluştu:', error);
+      }
+    };
+    fetchCategory();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -117,43 +169,15 @@ function UyeAnaSayfa() {
         {/* Drawer (Menü) */}
         <CustomDrawer anchor="left" open={openDrawer} onClose={handleDrawerClose}>
           <List>
-            {/* Menü öğelerini buraya ekleyin */}
-            <ListItem button component={Link} to="/kategori2" onClick={handleDrawerClose}>
-              <ListItemText>
-                <Typography variant="body1" fontWeight="bold">
-                  Yeni Gelenler
-                </Typography>
-              </ListItemText>
-            </ListItem>
-            <ListItem button component={Link} to="/kategori2" onClick={handleDrawerClose}>
-              <ListItemText>
-                <Typography variant="body1" fontWeight="bold">
-                  Çok Satanlar
-                </Typography>
-              </ListItemText>
-            </ListItem>
-            <ListItem button component={Link} to="/kategori2" onClick={handleDrawerClose}>
-              <ListItemText>
-                <Typography variant="body1" fontWeight="bold">
-                  Edebiyat
-                </Typography>
-              </ListItemText>
-            </ListItem>
-            <ListItem button component={Link} to="/kategori2" onClick={handleDrawerClose}>
-              <ListItemText>
-                <Typography variant="body1" fontWeight="bold">
-                  Roman
-                </Typography>
-              </ListItemText>
-            </ListItem>
-            <ListItem button component={Link} to="/kategori2" onClick={handleDrawerClose}>
-              <ListItemText>
-                <Typography variant="body1" fontWeight="bold">
-                  Kişisel Gelişim
-                </Typography>
-              </ListItemText>
-            </ListItem>
-
+            {categories.map((category) => (
+              <ListItem key={category.id} button component={Link} to={`/category/${category.id}`} onClick={() => handleCategoryClick(category.id)}>
+                <ListItemText>
+                  <Typography variant="body1" fontWeight="bold">
+                    {category.name}
+                  </Typography>
+                </ListItemText>
+              </ListItem>
+            ))}
           </List>
         </CustomDrawer>
 
@@ -166,11 +190,45 @@ function UyeAnaSayfa() {
               <p className="lead">
                 Hoşgeldiniz! Kitapları inceleyerek hemen alışverişe başlayın.
               </p>
+
+
               <div className="Products">
-                <Products />
+                {/* Arama Sonucu Göster */}
+                {searchTerm && (
+                  <div className="row">
+                    {searchResults.length > 0 ? (
+                      // Eğer arama sonucu bulunmuşsa, ürünleri map fonksiyonu ile göster
+                      searchResults.map((product) => (
+                        <div key={product.id} className="col-md-3 mb-2">
+                          {/* Direkt ürün bilgilerini göster */}
+                          <Link to={`/product/${product.id}`} style={{ textDecoration: 'none' }}>
+                            <div className="card" style={{ backgroundColor: 'rgba(128, 128, 128, 0.1)' }}>
+                              <div className="card-body">
+                                <img src={`data:image/jpeg;base64, ${product.imageUrl}`} width={100} height={190} alt={product.name} />
+                                <h5 className="card-title">{product.name}</h5>
+                                <p className="card-text">{product.price} TL</p>
+                              </div>
+                            </div>
+                          </Link>
+                        </div>
+                      ))
+                    ) : (
+                      // Eğer arama sonucu bulunamamışsa, sadece backend'den gelen hata mesajını göster
+                      <div className="col">
+                        {error && (
+                          <p>{error}</p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Tüm Ürünleri Göster */}
+                {!searchTerm && (
+                  <Products />
+                )}
               </div>
-            </div>
-            
+            </div>            
           </div>
         </div>
       </div>

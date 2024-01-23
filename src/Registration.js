@@ -2,10 +2,24 @@ import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { toast , ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {
+  AppBar,
+  Toolbar,
+  Typography
+} from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 import axios from "axios";
 import { Padding } from '@mui/icons-material';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#434343',
+    },
+  },
+});
 
 export default function Registration(){
 
@@ -63,87 +77,98 @@ export default function Registration(){
     }
 
     return(
-  <div className="mask d-flex align-items-center h-100 gradient-custom-3">
-    <div className="container h-100">
-      <div className="row d-flex justify-content-center align-items-center h-100">
-        <div className="col-12 col-md-9 col-lg-7 col-xl-6" style={{padding: "50px"}}>
-          <div className="card" style={{borderRadius: '15px'}}>
-            <div className="card-body p-5">
-              <h2 className="text-uppercase text-center mb-5">Hesap Oluştur</h2>
+      <ThemeProvider theme={theme}>
+  <div>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
+          Kitapyurdu.com
+        </Typography>
+      </Toolbar>
+    </AppBar>
+      <div className="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div className="container h-100">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className="col-12 col-md-9 col-lg-7 col-xl-6" style={{padding: "50px"}}>
+              <div className="card" style={{borderRadius: '15px'}}>
+                <div className="card-body p-5">
+                  <h2 className="text-uppercase text-center mb-5">Hesap Oluştur</h2>
 
-              <form>
+                  <form>
 
-              <div className="form-floating mb-4">
-                  <input
-                    type="text"
-                    id="form3Example1cg"
-                    className="form-control form-control-lg"
-                    onChange={(e) => setNameSurname(e.target.value)}
-                    value={namesurname}
-                  />
-                  <label className="form-label" htmlFor="form3Example1cg">Ad-Soyad</label>
+                  <div className="form-floating mb-4">
+                      <input
+                        type="text"
+                        id="form3Example1cg"
+                        className="form-control form-control-lg"
+                        onChange={(e) => setNameSurname(e.target.value)}
+                        value={namesurname}
+                      />
+                      <label className="form-label" htmlFor="form3Example1cg">Ad-Soyad</label>
+                    </div>
+
+                    <div className="form-floating mb-4">
+                      <input
+                        type="text"
+                        id="form3Example2cg"
+                        className="form-control form-control-lg"
+                        onChange={(e) => setUsername(e.target.value)}
+                        value={userName}
+                      />
+                      <label className="form-label" htmlFor="form3Example1cg">Kullanıcı Adı</label>
+                    </div>
+
+                    <div className="form-floating mb-4">
+                      <input
+                        type="email"
+                        id="form3Example3cg"
+                        className="form-control form-control-lg"
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                      />
+                      <label className="form-label" htmlFor="form3Example3cg">E-posta</label>
+                    </div>
+
+                    <div className="form-floating mb-4">
+                      <input
+                        type="password"
+                        id="form3Example4cg"
+                        className="form-control form-control-lg"
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                      />
+                      <label className="form-label" htmlFor="form3Example4cg">Şifre</label>
+                    </div>
+
+                    <div className="form-floating mb-4">
+                      <input
+                        type="password"
+                        id="form3Example4cg"
+                        className="form-control form-control-lg"
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        value={confirmpassword}
+                      />
+                      <label className="form-label" htmlFor="form3Example4cg">Şifre tekrar</label>
+                    </div>
+
+
+                    <div className="d-flex justify-content-center">
+                      <button type="button"
+                        className="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onClick={(e) => handleSave(e)}>Kaydol</button>
+                    </div>
+
+                    <p className="text-center text-muted mt-5 mb-0">Zaten hesabın var mı? <a href="#!" className="fw-bold text-body" onClick={(e) => handleLogin(e)}><u>Giriş Yap</u></a></p>
+
+                  </form>
+                  <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+
                 </div>
-
-                <div className="form-floating mb-4">
-                  <input
-                    type="text"
-                    id="form3Example2cg"
-                    className="form-control form-control-lg"
-                    onChange={(e) => setUsername(e.target.value)}
-                    value={userName}
-                  />
-                  <label className="form-label" htmlFor="form3Example1cg">Kullanıcı Adı</label>
-                </div>
-
-                <div className="form-floating mb-4">
-                  <input
-                    type="email"
-                    id="form3Example3cg"
-                    className="form-control form-control-lg"
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                  />
-                  <label className="form-label" htmlFor="form3Example3cg">E-posta</label>
-                </div>
-
-                <div className="form-floating mb-4">
-                  <input
-                    type="password"
-                    id="form3Example4cg"
-                    className="form-control form-control-lg"
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
-                  />
-                  <label className="form-label" htmlFor="form3Example4cg">Şifre</label>
-                </div>
-
-                <div className="form-floating mb-4">
-                  <input
-                    type="password"
-                    id="form3Example4cg"
-                    className="form-control form-control-lg"
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    value={confirmpassword}
-                  />
-                  <label className="form-label" htmlFor="form3Example4cg">Şifre tekrar</label>
-                </div>
-
-
-                <div className="d-flex justify-content-center">
-                  <button type="button"
-                    className="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onClick={(e) => handleSave(e)}>Kaydol</button>
-                </div>
-
-                <p className="text-center text-muted mt-5 mb-0">Zaten hesabın var mı? <a href="#!" className="fw-bold text-body" onClick={(e) => handleLogin(e)}><u>Giriş Yap</u></a></p>
-
-              </form>
-              <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
-
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-    )
+</ThemeProvider>
+  );
 }
