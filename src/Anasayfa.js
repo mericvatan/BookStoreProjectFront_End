@@ -131,7 +131,7 @@ function AnaSayfa() {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await axios.get('http://localhost:5045/api/Category');
+        const response = await axios.get('http://localhost:5045/api/Category/All');
         const CategoryList = response.data.data;
         setCategories(CategoryList);
       } catch (error) {

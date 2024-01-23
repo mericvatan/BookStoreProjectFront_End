@@ -19,7 +19,7 @@ function RouterPage() {
         <Route path="/Registration" element={<Registration />} />
         <Route path="/UyeAnasayfa" element={<UyeAnasayfa />} />
         <Route path="/product/:id" element={<ProductDetails/>} />
-        <Route path="/category/:categoryId" element={<CategoryPage/>} />
+        <Route path="/category/:id" element={<CategoryPage/>} />
       </Routes>
     </Router>
   );

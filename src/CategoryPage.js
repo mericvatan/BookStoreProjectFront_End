@@ -1,6 +1,5 @@
-
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Tab, Nav } from 'react-bootstrap';
 import axios from 'axios';
@@ -70,10 +69,8 @@ const customButtonStyle = {
   transition: 'background-color 0.3s, color 0.3s',
 };
 
-
-
-
 function CategoryPage() {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -102,8 +99,8 @@ function CategoryPage() {
         console.error('İstek başarısız oldu:', response);
       }
     } catch (error) {
-        const errorMessage = error.response.data;
-        setError(errorMessage);
+      const errorMessage = error.response.data;
+      setError(errorMessage);
     }
   };
 
@@ -119,12 +116,15 @@ function CategoryPage() {
     // Kategoriye tıklanınca yapılacak işlemler burada
     // Örneğin, ilgili kategori sayfasına yönlendirme
     handleDrawerClose(); // Menüyü kapat
+
+    // Kategori sayfasına yönlendirme
+    navigate(`/category/${categoryId}`);
   };
 
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const response = await axios.get('http://localhost:5045/api/Category');
+        const response = await axios.get('http://localhost:5045/api/Category/All');
         const CategoryList = response.data.data;
         setCategories(CategoryList);
       } catch (error) {
@@ -141,7 +141,7 @@ function CategoryPage() {
     const fetchCategoryProducts = async () => {
       try {
         const response = await axios.get(`http://localhost:5045/api/Category/GetProductsByCategory/${id}`);
-        const categoryProductsList = response.data.data;
+        const categoryProductsList = response.data;
         setCategoryProducts(categoryProductsList);
       } catch (error) {
         console.error('Kategori ürünlerini getirirken bir hata oluştu:', error);
@@ -173,10 +173,10 @@ function CategoryPage() {
             <Search>
               <SearchIcon style={{ marginRight: '8px' }} />
               <StyledInputBase 
-              placeholder="Kitap Adı veya Yazar Ara" 
-              inputProps={{ 'aria-label': 'search' }}
-              value={searchTerm}
-              onChange={handleInputChange}
+                placeholder="Kitap Adı veya Yazar Ara" 
+                inputProps={{ 'aria-label': 'search' }}
+                value={searchTerm}
+                onChange={handleInputChange}
               />
             </Search>
 
@@ -258,16 +258,16 @@ function CategoryPage() {
                 )}
 
                 {/* Kategorinin Tüm Ürünlerini Göster */}
-                {!searchTerm && (
+                { (
                   <div className="row">
                     {categoryProducts.map((product) => (
                       <div key={product.id} className="col-md-3 mb-2">
                         <Link to={`/product/${product.id}`} style={{ textDecoration: 'none' }}>
                           <div className="card" style={{ backgroundColor: 'rgba(128, 128, 128, 0.1)' }}>
                             <div className="card-body">
-                                <img src={`data:image/jpeg;base64, ${product.imageUrl}`} width={100} height={190} alt={product.name} />
-                                <h5 className="card-title">{product.name}</h5>
-                                <p className="card-text">{product.price} TL</p>
+                              <img src={`data:image/jpeg;base64, ${product.imageUrl}`} width={100} height={190} alt={product.name} />
+                              <h5 className="card-title">{product.name}</h5>
+                              <p className="card-text">{product.price} TL</p>
                             </div>
                           </div>
                         </Link>
