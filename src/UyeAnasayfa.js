@@ -80,13 +80,11 @@ function UyeAnaSayfa() {
     try {
       const response = await axios.get(`http://localhost:5045/api/Product/GetProductByKeyword/${keyword}`);
       
-      // İsteğin başarılı olup olmadığını kontrol et
       if (response) {
         const searchResults = response.data.data;
         setSearchResults(searchResults);
         setError(''); // Başarılı bir arama olduğunda hata durumunu temizle
       } else {
-        // Başarısız istek durumunda bir şeyler yapabilirsiniz
         console.error('İstek başarısız oldu:', response);
       }
     } catch (error) {
@@ -105,8 +103,7 @@ function UyeAnaSayfa() {
   };
 
   const handleCategoryClick = (categoryId) => {
-    // Kategoriye tıklanınca yapılacak işlemler burada
-    // Örneğin, ilgili kategori sayfasına yönlendirme
+
     handleDrawerClose(); // Menüyü kapat
   };
 
@@ -183,7 +180,6 @@ function UyeAnaSayfa() {
 
         
 
-        {/* Ana bölüm */}
         <div className="container mt-5">
           <div className="row text-center mb-5">
             <div className="col">
@@ -193,14 +189,11 @@ function UyeAnaSayfa() {
 
 
               <div className="Products">
-                {/* Arama Sonucu Göster */}
                 {searchTerm && (
                   <div className="row">
                     {searchResults.length > 0 ? (
-                      // Eğer arama sonucu bulunmuşsa, ürünleri map fonksiyonu ile göster
                       searchResults.map((product) => (
                         <div key={product.id} className="col-md-3 mb-2">
-                          {/* Direkt ürün bilgilerini göster */}
                           <Link to={`/product/${product.id}`} style={{ textDecoration: 'none' }}>
                             <div className="card" style={{ backgroundColor: 'rgba(128, 128, 128, 0.1)' }}>
                               <div className="card-body">
@@ -213,7 +206,6 @@ function UyeAnaSayfa() {
                         </div>
                       ))
                     ) : (
-                      // Eğer arama sonucu bulunamamışsa, sadece backend'den gelen hata mesajını göster
                       <div className="col">
                         {error && (
                           <p>{error}</p>
@@ -222,8 +214,6 @@ function UyeAnaSayfa() {
                     )}
                   </div>
                 )}
-
-                {/* Tüm Ürünleri Göster */}
                 {!searchTerm && (
                   <Products />
                 )}

@@ -3,6 +3,9 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Padding } from "@mui/icons-material";
 import { width } from "@mui/system";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart, faHeart } from '@fortawesome/free-solid-svg-icons';
+
 
 function ProductDetails() {
   const { id } = useParams();
@@ -50,7 +53,7 @@ function ProductDetails() {
             <p style={{ fontSize: "20px" }}>{product.authorName}</p>
             <p>
               <a>Fiyat:</a>
-              {product.price} TL
+              {product.price} ₺
             </p>
             <p>
               <a>Sayfa Sayısı:</a>
@@ -61,6 +64,14 @@ function ProductDetails() {
               <a style={{ fontSize: "16px", fontWeight: "bolder" }}>AÇIKLAMA</a><br />
               {product.description}
             </p>
+            <button >
+        <FontAwesomeIcon icon={faShoppingCart} /> Sepete Ekle
+      </button>
+
+     
+      <button >
+        <FontAwesomeIcon icon={faHeart} /> Favorilere Ekle
+      </button>
          
         </div>
       </div>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom'; // "NavLink" olarak düzeltildi
+import { Link, NavLink } from 'react-router-dom'; 
 import { Nav } from 'react-bootstrap';
+import { FaShoppingBasket } from 'react-icons/fa'; 
+
 import axios from "axios";
 
 function Products() {
@@ -30,7 +32,7 @@ function Products() {
                 <div className="card-body">
                     <img src={`data:image/jpeg;base64, ${product.imageUrl}`} width={100} height={190} alt={product.name} />
                   <h5 className="card-title">{product.name}</h5>
-                  <p className="card-text">{product.price} TL</p>
+                  <p className="card-text">{product.price} ₺ <FaShoppingBasket size={20} /></p>
                 </div>
               </div>
             </Link>

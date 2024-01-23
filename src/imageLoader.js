@@ -13,7 +13,7 @@ const ImageGallery = ()=>{
             {images.map((image, index) => (
               <img
                 key={index}
-                src={image} // default özelliği, import edilen modülün içeriğini temsil eder
+                src={image} 
                 style={{ maxWidth: '90%', margin: '10px' }}
               />
             ))}
