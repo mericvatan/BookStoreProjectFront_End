@@ -61,20 +61,22 @@ function Login() {
   return (
     <ThemeProvider theme={theme}>
   <div>
-  <AppBar position="static" sx={{ backgroundColor: '#9E0A25' }}>
+  <AppBar position="static" sx={{ backgroundColor: '#8F0213' }}>
       <Toolbar>
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-          Kitapyurdu.com
+          Kitapkurdu.com
         </Typography>
       </Toolbar>
     </AppBar>
     <div className="mask d-flex align-items-center h-100 gradient-custom-3">
-      <div className="container h-100">
+      <div className="container h-100"  >
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-12 col-md-9 col-lg-7 col-xl-6" style={{ padding: "50px" }}>
-            <div className="card" style={{ borderRadius: '15px' }}>
+            <div className="card" style={{ borderRadius: '15px', backgroundColor: 'rgba(255, 215, 219, 0.7)' }}>
+
               <div className="card-body p-5">
-                <h2 className="text-uppercase text-center mb-5">Giriş Yap</h2>
+                <h2 className="text-center mb-5">Giriş Yap</h2>
+
 
                 <form>
                   <div className="form-floating mb-4">
@@ -113,8 +115,14 @@ function Login() {
                   </div>
 
                   <div className="d-flex justify-content-center">
-                    <button type="button"
-                      className="btn btn-success btn-block btn-lg gradient-custom-4 text-body" onClick={(e) => handleLogin(e)}>Giriş Yap</button>
+                    <button
+                      type="button"
+                      className="btn btn-success btn-block btn-lg text-body"
+                      style={{ backgroundColor: '#ED6875', border: 'none' }}
+                      onClick={(e) => handleLogin(e)}
+                    >
+                      Giriş Yap
+                    </button>
                   </div>
 
                   <p className="text-center text-muted mt-5 mb-0">Hesabın yoksa <a href="#!" className="fw-bold text-body" onClick={(e) => handleRegistr(e)}><u>Üye Ol</u></a></p>
