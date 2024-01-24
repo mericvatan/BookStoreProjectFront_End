@@ -21,7 +21,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/system';
 import SearchResult from './SearchResult.js';
 
-
 const CustomDrawer = styled(Drawer)({
   '& .MuiDrawer-paper': {
     width: '250px',
@@ -54,7 +53,6 @@ const Search = styled('div')(({ theme }) => ({
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: theme.palette.common.white,
-
   '& .MuiInputBase-input': {
     padding: theme.spacing(1),
     paddingLeft: theme.spacing(2),
@@ -78,26 +76,22 @@ function CategoryPage() {
   const [categories, setCategories] = useState([]);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [error, setError] = useState('');
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null); 
 
   const handleInputChange = (e) => {
     const newSearchTerm = e.target.value;
     setSearchTerm(newSearchTerm);
-
-    // Her karakter girişinde arama işlemini başlat
     handleSearch(newSearchTerm);
   };
 
   const handleSearch = async (keyword) => {
     try {
       const response = await axios.get(`http://localhost:5045/api/Product/GetProductByKeyword/${keyword}`);
-      
-      // İsteğin başarılı olup olmadığını kontrol et
       if (response) {
         const searchResults = response.data.data;
         setSearchResults(searchResults);
-        setError(''); // Başarılı bir arama olduğunda hata durumunu temizle
+        setError('');
       } else {
-        // Başarısız istek durumunda bir şeyler yapabilirsiniz
         console.error('İstek başarısız oldu:', response);
       }
     } catch (error) {
@@ -114,13 +108,10 @@ function CategoryPage() {
     setOpenDrawer(false);
   };
 
-  const handleCategoryClick = (categoryId) => {
-    // Kategoriye tıklanınca yapılacak işlemler burada
-    // Örneğin, ilgili kategori sayfasına yönlendirme
-    handleDrawerClose(); // Menüyü kapat
-
-    // Kategori sayfasına yönlendirme
-    navigate(`/category/${categoryId}`);
+  const handleCategoryClick = (id) => {
+    handleDrawerClose();
+    navigate(`/category/${id}`);
+    setSelectedCategoryId(id);
   };
 
   useEffect(() => {
@@ -149,7 +140,6 @@ function CategoryPage() {
         console.error('Kategori ürünlerini getirirken bir hata oluştu:', error);
       }
     };
-
     fetchCategoryProducts();
   }, [id]);
 
@@ -169,9 +159,8 @@ function CategoryPage() {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
-              Kitapyurdu.com
+              Kitapkurdu.com
             </Typography>
-
             <Search>
               <SearchIcon style={{ marginRight: '8px' }} />
               <StyledInputBase 
@@ -181,7 +170,6 @@ function CategoryPage() {
                 onChange={handleInputChange}
               />
             </Search>
-
             <div style={{ marginLeft: 'auto' }}>
               <Tab.Container>
                 <Nav>
@@ -204,14 +192,20 @@ function CategoryPage() {
             </div>
           </Toolbar>
         </AppBar>
-
+  
         {/* Drawer (Menü) */}
         <CustomDrawer anchor="left" open={openDrawer} onClose={handleDrawerClose}>
           <List>
             {categories.map((category) => (
-              <ListItem key={category.id} button component={Link} to={`/category/${category.id}`} onClick={() => handleCategoryClick(category.id)}>
+              <ListItem
+                key={category.id}
+                button
+                component={Link}
+                to={`/category/${category.id}`}
+                onClick={() => handleCategoryClick(category.id)}
+              >
                 <ListItemText>
-                  <Typography variant="body1" fontWeight="bold">
+                  <Typography variant="body1" fontWeight={selectedCategoryId === category.id ? "bold" : "normal"}>
                     {category.name}
                   </Typography>
                 </ListItemText>
@@ -219,23 +213,18 @@ function CategoryPage() {
             ))}
           </List>
         </CustomDrawer>
-
-        {/* Ana bölüm */}
+  
         <div className="container mt-5">
           <div className="row text-center mb-5">
             <div className="col">
               <h2 className="lead">
-                Kategori {id} Ürünleri
+                {categories.find(category => category.id === selectedCategoryId)?.name} Ürünleri
               </h2>
-
               <div className="Products">
-                {/* Arama Sonucu Göster */}
                 {searchTerm && (
                   <SearchResult searchResults={searchResults} error={error} />
                 )}
-
-                {/* Kategorinin Tüm Ürünlerini Göster */}
-                { (
+                {(
                   <div className="row">
                     {categoryProducts.map((product) => (
                       <div key={product.id} className="col-md-3 mb-2">
@@ -259,6 +248,7 @@ function CategoryPage() {
       </div>
     </ThemeProvider>
   );
+  
 }
 
 export default CategoryPage;
