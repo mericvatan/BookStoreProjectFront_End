@@ -61,7 +61,7 @@ function Login() {
   return (
     <ThemeProvider theme={theme}>
   <div>
-    <AppBar position="static">
+  <AppBar position="static" sx={{ backgroundColor: '#9E0A25' }}>
       <Toolbar>
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}>
           Kitapyurdu.com
