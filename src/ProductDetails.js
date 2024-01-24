@@ -3,29 +3,27 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Padding } from "@mui/icons-material";
 import { width } from "@mui/system";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart, faHeart } from '@fortawesome/free-solid-svg-icons';
-import AnaSayfaToolbar from './CustomToolbar.js';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart, faHeart } from "@fortawesome/free-solid-svg-icons";
+import AnaSayfaToolbar from "./CustomToolbar.js";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#434343',
+      main: "#434343",
     },
   },
 });
-
 
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [error, setError] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [categories, setCategories] = useState([]);
-
 
   const handleInputChange = (e) => {
     const newSearchTerm = e.target.value;
@@ -37,17 +35,21 @@ function ProductDetails() {
 
   const handleSearch = async (keyword) => {
     try {
-      const response = await axios.get(`http://localhost:5045/api/Product/GetProductByKeyword/${keyword}`);
-    
+      const response = await axios.get(
+        `http://localhost:5045/api/Product/GetProductByKeyword/${keyword}`
+      );
+
       // İsteğin başarılı olup olmadığını kontrol et
       if (response && response.data) {
         const searchResults = response.data.data;
         setSearchResults(searchResults);
-        setError(''); // Başarılı bir arama olduğunda hata durumunu temizle
+        setError(""); // Başarılı bir arama olduğunda hata durumunu temizle
       } else {
         // Backend'den gelen tek bir hata mesajını kontrol et
         const errorMessage = response.data.message;
-        setError(errorMessage || 'İstek başarısız oldu. Lütfen tekrar deneyin.');
+        setError(
+          errorMessage || "İstek başarısız oldu. Lütfen tekrar deneyin."
+        );
       }
     } catch (error) {
       // Hata durumu kontrolü
@@ -55,7 +57,7 @@ function ProductDetails() {
         const errorMessage = error.response.data;
         setError(errorMessage);
       } else {
-        setError('Arama sırasında bir hata oluştu. Lütfen tekrar deneyin.');
+        setError("Arama sırasında bir hata oluştu. Lütfen tekrar deneyin.");
         console.error(error);
       }
     }
@@ -107,46 +109,50 @@ function ProductDetails() {
           handleCategoryClick={handleCategoryClick}
           openDrawer={openDrawer}
         />
-        <div className="justify-content-center" style={{ paddingTop: "9rem" }}>
-          <div
-            className="container d-flex justify-content-center align-items-center"
-            style={{ backgroundColor: 'rgba(128, 128, 128, 0.1)' }}
-          >
-            <div className="col-md-4">
-              <img
-                src={`data:image/jpeg;base64, ${product.imageUrl}`}
-                alt={product.name}
-                style={{ paddingTop: "0rem" }}
-              />
-            </div>
-            <div className="col-md-5">
-              <div className="row-md-5">
-                <div
-                  className="text-start"
-                  style={{ fontSize: "16px", paddingTop: "5rem" }}
-                >
-                  <h5 style={{ fontSize: "30px", fontWeight: "bold" }}>
-                    {product.name}
-                  </h5>
-  
-                  <p style={{ fontSize: "20px" }}>{product.authorName}</p>
-                  <p>
-                    <a>Fiyat:</a>
-                    {product.price} ₺
-                  </p>
-                  <p>
-                    <a>Sayfa Sayısı:</a>
-                    {product.pages}
-                  </p>
-                </div>
-                <p className="text-start">
-                  <a style={{ fontSize: "16px", fontWeight: "bolder" }}>AÇIKLAMA</a><br />
-                  {product.description}
+      </div>
+      <div className="row">
+        <div
+          className="col-md-3 d-flex justify-content-start align-item-start"
+          style={{ padding: "5rem", marginTop: "5rem", marginLeft: "10rem" }}
+        >
+          <div className="col-md-4">
+            <img
+              src={`data:image/jpeg;base64, ${product.imageUrl}`}
+              width={250}
+              height={340}
+              alt={product.name}
+            />
+          </div>
+        </div>
+        <div className="row-md-4 d-flex justify-content-center align-item-center">
+          <div className="col-md-4" style={{ marginTop: "-25rem" }}>
+            <div>
+              <div className="text-start">
+                <h5 style={{ fontSize: "27px", fontWeight: "bold" }}>
+                  {product.name}
+                </h5>
+                <p style={{ fontSize: "20px" }}>{product.authorName}</p>
+                <p>
+                  Fiyat:
+                  {product.price} ₺
                 </p>
-                <button>
+                <p>
+                  Sayfa Sayısı:
+                  {product.pages}
+                </p>
+              </div>
+              <p className="text-start">
+                <a style={{ fontSize: "16px", fontWeight: "bolder" }}>
+                  AÇIKLAMA
+                </a>
+                <br />
+                {product.description}
+              </p>
+              <div className="d-flex">
+                <button style={{ marginRight: "1rem" }}>
                   <FontAwesomeIcon icon={faShoppingCart} /> Sepete Ekle
                 </button>
-  
+
                 <button>
                   <FontAwesomeIcon icon={faHeart} /> Favorilere Ekle
                 </button>
@@ -160,4 +166,3 @@ function ProductDetails() {
 }
 
 export default ProductDetails;
-
