@@ -131,7 +131,7 @@ function UyeAnaSayfa() {
   return (
     <ThemeProvider theme={theme}>
       <div>
-        <AppBar position="static" >
+        <AppBar position="static" sx={{ backgroundColor: '#8F0213' }}>
           <Toolbar>
             <IconButton
               size="large"

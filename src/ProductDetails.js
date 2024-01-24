@@ -78,6 +78,19 @@ function ProductDetails() {
   };
 
   useEffect(() => {
+    const fetchCategory = async () => {
+      try {
+        const response = await axios.get('http://localhost:5045/api/Category/All');
+        const CategoryList = response.data.data;
+        setCategories(CategoryList);
+      } catch (error) {
+        console.error('Kategorileri getirirken bir hata oluştu:', error);
+      }
+    };
+    fetchCategory();
+  }, []);
+
+  useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await axios.get(
