@@ -19,6 +19,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/system';
+import SearchResult from './SearchResult.js';
+
 
 const CustomDrawer = styled(Drawer)({
   '& .MuiDrawer-paper': {
@@ -80,6 +82,8 @@ function CategoryPage() {
   const handleInputChange = (e) => {
     const newSearchTerm = e.target.value;
     setSearchTerm(newSearchTerm);
+
+    // Her karakter girişinde arama işlemini başlat
     handleSearch(newSearchTerm);
   };
 
@@ -87,11 +91,13 @@ function CategoryPage() {
     try {
       const response = await axios.get(`http://localhost:5045/api/Product/GetProductByKeyword/${keyword}`);
       
+      // İsteğin başarılı olup olmadığını kontrol et
       if (response) {
         const searchResults = response.data.data;
         setSearchResults(searchResults);
-        setError(''); 
+        setError(''); // Başarılı bir arama olduğunda hata durumunu temizle
       } else {
+        // Başarısız istek durumunda bir şeyler yapabilirsiniz
         console.error('İstek başarısız oldu:', response);
       }
     } catch (error) {
@@ -109,8 +115,11 @@ function CategoryPage() {
   };
 
   const handleCategoryClick = (categoryId) => {
-    
+    // Kategoriye tıklanınca yapılacak işlemler burada
+    // Örneğin, ilgili kategori sayfasına yönlendirme
     handleDrawerClose(); // Menüyü kapat
+
+    // Kategori sayfasına yönlendirme
     navigate(`/category/${categoryId}`);
   };
 
@@ -220,32 +229,12 @@ function CategoryPage() {
               </h2>
 
               <div className="Products">
-   
+                {/* Arama Sonucu Göster */}
                 {searchTerm && (
-                  <div className="row">
-                    {searchResults.length > 0 ? (
-                      searchResults.map((product) => (
-                        <div key={product.id} className="col-md-3 mb-2">
-                          <Link to={`/product/${product.id}`} style={{ textDecoration: 'none' }}>
-                            <div className="card" style={{ backgroundColor: 'rgba(128, 128, 128, 0.1)' }}>
-                              <div className="card-body">
-                                <img src={`data:image/jpeg;base64, ${product.imageUrl}`} width={100} height={190} alt={product.name} />
-                                <h5 className="card-title">{product.name}</h5>
-                                <p className="card-text">{product.price} TL</p>
-                              </div>
-                            </div>
-                          </Link>
-                        </div>
-                      ))
-                    ) : (
-                      <div className="col">
-                        {error && (
-                          <p>{error}</p>
-                        )}
-                      </div>
-                    )}
-                  </div>
+                  <SearchResult searchResults={searchResults} error={error} />
                 )}
+
+                {/* Kategorinin Tüm Ürünlerini Göster */}
                 { (
                   <div className="row">
                     {categoryProducts.map((product) => (
