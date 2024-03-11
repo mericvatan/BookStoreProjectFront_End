@@ -15,6 +15,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { styled } from '@mui/system';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart} from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
 import { Tab, Nav } from 'react-bootstrap';
 
@@ -121,9 +123,19 @@ const CustomToolbar = ({
                     </button>
                   </Nav.Link>
                 </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link as={Link} to="/" style={{ ...customButtonStyle }}>
+                  <button type='button' className='btn btn-outline-secondary' style={{color:"white"}} >
+                    <FontAwesomeIcon icon={faShoppingCart} /> Sepetim
+                  </button>
+                  </Nav.Link>
+                </Nav.Item>
+
               </Nav>
             </Tab.Container>
+
           </div>
+
         </Toolbar>
       </AppBar>
 

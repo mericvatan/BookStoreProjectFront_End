@@ -7,7 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart, faHeart } from "@fortawesome/free-solid-svg-icons";
 import AnaSayfaToolbar from "./CustomToolbar.js";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const theme = createTheme({
   palette: {
     primary: {
@@ -72,10 +74,30 @@ function ProductDetails() {
   };
 
   const handleCategoryClick = (categoryId) => {
-    // Kategoriye tıklanınca yapılacak işlemler burada
-    // Örneğin, ilgili kategori sayfasına yönlendirme
     handleDrawerClose(); // Menüyü kapat
   };
+
+  // sepete ekleme ve favorilere ekleme işlemleri 
+  const handleAddToChart = (e) =>{
+    
+    try{
+      toast.success("Ürün Sepete eklendi!");
+
+    }catch(error){
+      toast.error("Ürün sepete eklenemedi, tekrar deneyin.")
+    }
+    
+  }
+  
+  const handleAddToFavorites = (e) =>{
+    
+    try{
+      toast.success("Ürün favorilere eklendi!");
+
+    }catch(error){
+      toast.error("Ürün favorilere eklenemedi, tekrar deneyin.")
+    }
+  }
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -149,13 +171,14 @@ function ProductDetails() {
                 {product.description}
               </p>
               <div className="d-flex">
-                <button style={{ marginRight: "1rem" }}>
+                <button onClick={handleAddToChart} style={{ marginRight: "1rem" }} >
                   <FontAwesomeIcon icon={faShoppingCart} /> Sepete Ekle
                 </button>
-
-                <button>
+                <button onClick={handleAddToFavorites}>
                   <FontAwesomeIcon icon={faHeart} /> Favorilere Ekle
                 </button>
+                <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+
               </div>
             </div>
           </div>
