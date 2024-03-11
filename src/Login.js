@@ -21,7 +21,6 @@ const theme = createTheme({
 
 function Login() {
   const navigate = useNavigate(); 
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -31,13 +30,17 @@ function Login() {
     const data = {
       email: email,
       password: password,
-    };
+    };  // Başarılı giriş durumunda JWT token'i al ve local storage'a sakla
+
+
     const url = 'http://localhost:5045/api/Auth/Login';
     axios.post(url, data)
       .then((result) => {
         const dt = result.data;
         toast.success('Giriş Yapıldı!');
         navigate('/UyeAnasayfa');
+        const { token } = result.data;
+        localStorage.setItem('token', token);
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors) {
@@ -53,6 +56,8 @@ function Login() {
         }
       });
   };
+  
+
 
   const handleRegistr = () => {
     window.location.href = "/registration";

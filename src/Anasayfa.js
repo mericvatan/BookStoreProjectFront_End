@@ -3,7 +3,7 @@ import axios from 'axios';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Products from './Products.js';
 import SearchResult from './SearchResult.js';
-import AnaSayfaToolbar from './CustomToolbar.js'; // Yeni ekledik
+import AnaSayfaToolbar from './CustomToolbar.js';
 
 
 const theme = createTheme({

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
-import { Padding } from "@mui/icons-material";
-import { width } from "@mui/system";
+import { useParams, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart, faHeart } from "@fortawesome/free-solid-svg-icons";
 import AnaSayfaToolbar from "./CustomToolbar.js";
@@ -17,6 +15,7 @@ const theme = createTheme({
 });
 
 function ProductDetails() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -24,6 +23,8 @@ function ProductDetails() {
   const [error, setError] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   const handleInputChange = (e) => {
     const newSearchTerm = e.target.value;
@@ -108,6 +109,8 @@ function ProductDetails() {
   if (!product) {
     return <div>Loading...</div>;
   }
+
+
 
   return (
     <ThemeProvider theme={theme}>

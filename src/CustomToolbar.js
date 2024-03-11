@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -17,6 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from 'react-router-dom';
 import { Tab, Nav } from 'react-bootstrap';
+
 
 const CustomDrawer = styled(Drawer)({
   '& .MuiDrawer-paper': {
@@ -77,6 +79,24 @@ const CustomToolbar = ({
   handleCategoryClick,
   openDrawer,
 }) => {
+
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+    console.log('Token:', token);
+  }, []);
+
+  const handleLogout = async () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    console.log('Çıkış yapıldı. Token silindi.');
+  };
+
+  const { id } = useParams();
+
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="static" sx={{ backgroundColor: '#8F0213' }}>
@@ -107,20 +127,41 @@ const CustomToolbar = ({
           <div style={{ marginLeft: 'auto' }}>
             <Tab.Container>
               <Nav>
-                <Nav.Item>
-                  <Nav.Link as={Link} to="/Login" style={{ ...customButtonStyle }} className="me-2">
-                    <button type="button" className="btn btn-outline-secondary" style={{ color: 'white' }}>
-                      Giriş Yap
-                    </button>
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link as={Link} to="/Registration" style={{ ...customButtonStyle }}>
-                    <button type="button" className="btn btn-outline-secondary" style={{ color: 'white' }}>
-                      Üye Ol
-                    </button>
-                  </Nav.Link>
-                </Nav.Item>
+                {isLoggedIn ? (
+                  <>
+                    <Nav.Item>
+                      <Nav.Link as={Link} to="/myaccount" style={{ ...customButtonStyle }} className="me-2">
+                        <button type="button" className="btn btn-outline-secondary" style={{ color: 'white' }}>
+                          Hesabım
+                        </button>
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link onClick={handleLogout} style={{ ...customButtonStyle }}>
+                        <button type="button" className="btn btn-outline-secondary" style={{ color: 'white' }}>
+                          Çıkış Yap
+                        </button>
+                      </Nav.Link>
+                    </Nav.Item>
+                  </>
+                ) : (
+                  <>
+                    <Nav.Item>
+                      <Nav.Link as={Link} to="/Login" style={{ ...customButtonStyle }} className="me-2">
+                        <button type="button" className="btn btn-outline-secondary" style={{ color: 'white' }}>
+                          Giriş Yap
+                        </button>
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link as={Link} to="/Registration" style={{ ...customButtonStyle }}>
+                        <button type="button" className="btn btn-outline-secondary" style={{ color: 'white' }}>
+                          Üye Ol
+                        </button>
+                      </Nav.Link>
+                    </Nav.Item>
+                  </>
+                )}
               </Nav>
             </Tab.Container>
           </div>

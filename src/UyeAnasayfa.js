@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link , useLocation, useNavigate} from 'react-router-dom';
 import { Tab, Nav } from 'react-bootstrap';
 import {
   AppBar,
@@ -19,6 +19,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/system';
 import Products from './Products.js';
+import SearchResult from './SearchResult.js';
+
 
 const CustomDrawer = styled(Drawer)({
   '& .MuiDrawer-paper': {
@@ -74,10 +76,24 @@ function UyeAnaSayfa() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [error, setError] = useState('');
+  const navigate = useNavigate(); 
+  const location = useLocation();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    console.log('Token:', token);
+  }, [navigate]);
+
+  const handleLogout = async () => {
+    localStorage.removeItem('token');
+    navigate('/'); // Ana sayfaya yönlendir
+    console.log('Çıkış yapıldı. Token silindi.');
+  };
 
   const handleInputChange = (e) => {
     const newSearchTerm = e.target.value;
     setSearchTerm(newSearchTerm);
+
     // Her karakter girişinde arama işlemini başlat
     handleSearch(newSearchTerm);
   };
@@ -85,19 +101,26 @@ function UyeAnaSayfa() {
   const handleSearch = async (keyword) => {
     try {
       const response = await axios.get(`http://localhost:5045/api/Product/GetProductByKeyword/${keyword}`);
-
+    
       // İsteğin başarılı olup olmadığını kontrol et
-      if (response) {
+      if (response && response.data) {
         const searchResults = response.data.data;
         setSearchResults(searchResults);
         setError(''); // Başarılı bir arama olduğunda hata durumunu temizle
       } else {
-        // Başarısız istek durumunda bir şeyler yapabilirsiniz
-        console.error('İstek başarısız oldu:', response);
+        // Backend'den gelen tek bir hata mesajını kontrol et
+        const errorMessage = response.data.message;
+        setError(errorMessage || 'İstek başarısız oldu. Lütfen tekrar deneyin.');
       }
     } catch (error) {
-      const errorMessage = error.response?.data;
-      setError(errorMessage);
+      // Hata durumu kontrolü
+      if (error.response && error.response.data) {
+        const errorMessage = error.response.data;
+        setError(errorMessage);
+      } else {
+        setError('Arama sırasında bir hata oluştu. Lütfen tekrar deneyin.');
+        console.error(error);
+      }
     }
   };
 
@@ -163,12 +186,7 @@ function UyeAnaSayfa() {
                     </Nav.Link>
                   </Nav.Item>
                   <Nav.Item>
-                    <Nav.Link
-                      as={Link}
-                      to="/"
-                      style={{ ...customButtonStyle }}
-                      className="me-2"
-                    >
+                    <Nav.Link onClick={handleLogout} style={{ ...customButtonStyle }}>
                       <button type="button" className="btn btn-outline-secondary" style={{ color: 'white' }}>Çıkış Yap</button>
                     </Nav.Link>
                   </Nav.Item>
@@ -209,33 +227,11 @@ function UyeAnaSayfa() {
               <div className="Products">
                 {/* Arama Sonucu Göster */}
                 {searchTerm && (
-                  <div className="row">
-                    {searchResults.length > 0 ? (
-                      searchResults.map((product) => (
-                        <div key={product.id} className="col-md-3 mb-2">
-                          <Link to={`/product/${product.id}`} style={{ textDecoration: 'none' }}>
-                            <div className="card" style={{ backgroundColor: 'rgba(128, 128, 128, 0.1)' }}>
-                              <div className="card-body">
-                                <img src={`data:image/jpeg;base64, ${product.imageUrl}`} width={100} height={190} alt={product.name} />
-                                <h5 className="card-title">{product.name}</h5>
-                                <p className="card-text">{product.price} TL</p>
-                              </div>
-                            </div>
-                          </Link>
-                        </div>
-                      ))
-                    ) : (
-                      <div className="col">
-                        {error && (
-                          <p>{error}</p>
-                        )}
-                      </div>
-                    )}
-                  </div>
+                  <SearchResult searchResults={searchResults} error={error} />
                 )}
-                {!searchTerm && (
-                  <Products />
-                )}
+
+                {/* Tüm Ürünleri Göster */}
+                {!searchTerm && <Products />}
               </div>
             </div>
           </div>
