@@ -18,6 +18,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link } from 'react-router-dom';
 import { Tab, Nav } from 'react-bootstrap';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart} from "@fortawesome/free-solid-svg-icons";
 
 
 const CustomDrawer = styled(Drawer)({
@@ -141,6 +143,13 @@ const CustomToolbar = ({
                         <button type="button" className="btn btn-outline-secondary" style={{ color: 'white' }}>
                           Çıkış Yap
                         </button>
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link as={Link} to="/Sepet" style={{ ...customButtonStyle }}>
+                      <button type='button' className='btn btn-outline-secondary' style={{color:"white"}} >
+                        <FontAwesomeIcon icon={faShoppingCart} /> Sepetim
+                      </button>
                       </Nav.Link>
                     </Nav.Item>
                   </>

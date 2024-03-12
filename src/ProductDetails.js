@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart, faHeart } from "@fortawesome/free-solid-svg-icons";
 import AnaSayfaToolbar from "./CustomToolbar.js";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const theme = createTheme({
   palette: {
@@ -14,7 +17,7 @@ const theme = createTheme({
   },
 });
 
-function ProductDetails() {
+function ProductDetails({ productItems, handleAddProduct }) {
   const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -73,10 +76,22 @@ function ProductDetails() {
   };
 
   const handleCategoryClick = (categoryId) => {
-    // Kategoriye tıklanınca yapılacak işlemler burada
-    // Örneğin, ilgili kategori sayfasına yönlendirme
-    handleDrawerClose(); // Menüyü kapat
+    handleDrawerClose(); 
   };
+
+  // sepete ekleme ve favorilere ekleme işlemleri 
+
+
+
+  const handleAddToFavorites = (e) =>{
+
+    try{
+      toast.success("Ürün favorilere eklendi!");
+
+    }catch(error){
+      toast.error("Ürün favorilere eklenemedi, tekrar deneyin.")
+    }
+  }
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -109,8 +124,6 @@ function ProductDetails() {
   if (!product) {
     return <div>Loading...</div>;
   }
-
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -165,13 +178,15 @@ function ProductDetails() {
                 {product.description}
               </p>
               <div className="d-flex">
-                <button style={{ marginRight: "1rem" }}>
-                  <FontAwesomeIcon icon={faShoppingCart} /> Sepete Ekle
-                </button>
+              <button onClick={() => handleAddProduct(product)} style={{ marginRight: "1rem" }} >
+  <FontAwesomeIcon icon={faShoppingCart} /> Sepete Ekle
+</button>
+                
 
-                <button>
+                <button onClick={handleAddToFavorites}>
                   <FontAwesomeIcon icon={faHeart} /> Favorilere Ekle
                 </button>
+                <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
               </div>
             </div>
           </div>

@@ -20,6 +20,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { styled } from '@mui/system';
 import Products from './Products.js';
 import SearchResult from './SearchResult.js';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart} from "@fortawesome/free-solid-svg-icons";
 
 
 const CustomDrawer = styled(Drawer)({
@@ -69,6 +71,7 @@ const customButtonStyle = {
   color: 'white',
   transition: 'background-color 0.3s, color 0.3s',
 };
+
 
 function UyeAnaSayfa() {
   const [categories, setCategories] = useState([]);
@@ -151,6 +154,7 @@ function UyeAnaSayfa() {
     fetchCategory();
   }, []);
 
+
   return (
     <ThemeProvider theme={theme}>
       <div>
@@ -189,6 +193,13 @@ function UyeAnaSayfa() {
                     <Nav.Link onClick={handleLogout} style={{ ...customButtonStyle }}>
                       <button type="button" className="btn btn-outline-secondary" style={{ color: 'white' }}>Çıkış Yap</button>
                     </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                      <Nav.Link as={Link} to="/Sepet" style={{ ...customButtonStyle }}>
+                      <button type='button' className='btn btn-outline-secondary' style={{color:"white"}} >
+                        <FontAwesomeIcon icon={faShoppingCart} /> Sepetim
+                      </button>
+                      </Nav.Link>
                   </Nav.Item>
                 </Nav>
               </Tab.Container>

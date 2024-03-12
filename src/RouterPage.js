@@ -6,12 +6,17 @@ import Registration from './Registration';
 import UyeAnasayfa from './UyeAnasayfa';
 import ProductDetails from "./ProductDetails";
 import CategoryPage from './CategoryPage';
+import Sepet from './Sepet';
 
-function RouterPage() {
+
+function RouterPage({ productItems, cartItems, handleAddProduct, handleRemoveProduct }) {
+
+
   useEffect(() => {
     // ComponentWillUnmount'a benzer bir temizlik işlevi
     const cleanup = () => {
       localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('token'); // Tokenı da sil
     };
 
     // ComponentWillUnmount'a benzer bir davranış
@@ -24,14 +29,15 @@ function RouterPage() {
   }, []);
 
   return (
-    <Router>
+<Router>
       <Routes>
         <Route path="/Login" element={<Login />} />
         <Route path="/Registration" element={<Registration />} />
         <Route path="/UyeAnasayfa" element={<UyeAnasayfa />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/product/:id" element={<ProductDetails productItems={productItems} handleAddProduct={handleAddProduct} />} />
         <Route path="/category/:id" element={<CategoryPage />} />
         <Route path="/" element={<AnaSayfa />} />
+        <Route path="/Sepet" element={<Sepet cartItems={cartItems} handleAddProduct={handleAddProduct} handleRemoveProduct={handleRemoveProduct} />} />
       </Routes>
     </Router>
   );
