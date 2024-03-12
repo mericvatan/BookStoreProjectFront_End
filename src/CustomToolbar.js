@@ -169,6 +169,13 @@ const CustomToolbar = ({
                         </button>
                       </Nav.Link>
                     </Nav.Item>
+                    <Nav.Item>
+                      <Nav.Link as={Link} to="/Sepet" style={{ ...customButtonStyle }}>
+                      <button type='button' className='btn btn-outline-secondary' style={{color:"white"}} >
+                        <FontAwesomeIcon icon={faShoppingCart} /> Sepetim
+                      </button>
+                      </Nav.Link>
+                  </Nav.Item>
                   </>
                 )}
               </Nav>

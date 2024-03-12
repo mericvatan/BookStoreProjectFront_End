@@ -136,9 +136,7 @@ function UyeAnaSayfa() {
   };
 
   const handleCategoryClick = (categoryId) => {
-    // Kategoriye tıklanınca yapılacak işlemler burada
-    // Örneğin, ilgili kategori sayfasına yönlendirme
-    handleDrawerClose(); // Menüyü kapat
+    handleDrawerClose(); 
   };
 
   useEffect(() => {
