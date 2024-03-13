@@ -17,6 +17,8 @@ import {
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart} from "@fortawesome/free-solid-svg-icons";
 import { styled } from '@mui/system';
 import Products from './Products.js';
 
@@ -172,6 +174,13 @@ function UyeAnaSayfa() {
                       <button type="button" className="btn btn-outline-secondary" style={{ color: 'white' }}>Çıkış Yap</button>
                     </Nav.Link>
                   </Nav.Item>
+                  <Nav.Item>
+                  <Nav.Link as={Link} style={{ ...customButtonStyle }}>
+                  <button type='button' className='btn btn-outline-secondary' style={{color:"white"}} >
+                    <FontAwesomeIcon icon={faShoppingCart} /> Sepetim
+                  </button>
+                  </Nav.Link>
+                </Nav.Item>
                 </Nav>
               </Tab.Container>
             </div>

@@ -26,6 +26,7 @@ function ProductDetails() {
   const [error, setError] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [chart,setChart] = useState([]);
 
   const handleInputChange = (e) => {
     const newSearchTerm = e.target.value;
@@ -78,10 +79,18 @@ function ProductDetails() {
   };
 
   // sepete ekleme ve favorilere ekleme işlemleri 
+
   const handleAddToChart = (e) =>{
-    
+    const addedItems = {
+      name: product.name,
+      authorName:product.authorName,
+      price:product.price,
+      img: `data:image/jpeg;base64, ${product.imageUrl}`
+    }
     try{
-      toast.success("Ürün Sepete eklendi!");
+      setChart([...chart,addedItems])
+      console.log(chart)
+      toast.success(`${addedItems.name} sepete eklendi!`);
 
     }catch(error){
       toast.error("Ürün sepete eklenemedi, tekrar deneyin.")
@@ -171,11 +180,13 @@ function ProductDetails() {
                 {product.description}
               </p>
               <div className="d-flex">
-                <button onClick={handleAddToChart} style={{ marginRight: "1rem" }} >
+                <button 
+                onClick={handleAddToChart} 
+                style={{ marginRight: "1rem" }} >
                   <FontAwesomeIcon icon={faShoppingCart} /> Sepete Ekle
                 </button>
                 <button onClick={handleAddToFavorites}>
-                  <FontAwesomeIcon icon={faHeart} /> Favorilere Ekle
+                  <FontAwesomeIcon icon={faHeart} /> Favorilere Ekle 
                 </button>
                 <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
 
