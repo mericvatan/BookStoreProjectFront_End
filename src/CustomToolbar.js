@@ -19,8 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { Tab, Nav, Button,Dropdown } from "react-bootstrap";
-import Sepet from "./Sepet";
-import img from "./Unknown.jpeg"
+import Cart from "./Cart";
 
 const CustomDrawer = styled(Drawer)({
   "& .MuiDrawer-paper": {
@@ -167,7 +166,7 @@ const CustomToolbar = ({
                     <Dropdown.Menu >
                       <Dropdown.Item >
                       
-                      <Sepet  />
+                      <Cart  />
 
                       </Dropdown.Item>
                      

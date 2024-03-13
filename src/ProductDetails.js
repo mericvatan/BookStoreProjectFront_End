@@ -10,6 +10,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AddToChart from "./AddToChart.js";
 const theme = createTheme({
   palette: {
     primary: {
@@ -80,16 +81,15 @@ function ProductDetails() {
 
   // sepete ekleme ve favorilere ekleme işlemleri 
 
+
   const handleAddToChart = (e) =>{
     const addedItems = {
       name: product.name,
       authorName:product.authorName,
       price:product.price,
-      img: `data:image/jpeg;base64, ${product.imageUrl}`
     }
     try{
-      setChart([...chart,addedItems])
-      console.log(chart)
+     
       toast.success(`${addedItems.name} sepete eklendi!`);
 
     }catch(error){
@@ -97,7 +97,6 @@ function ProductDetails() {
     }
     
   }
-  
   const handleAddToFavorites = (e) =>{
     
     try{
@@ -185,7 +184,8 @@ function ProductDetails() {
                 style={{ marginRight: "1rem" }} >
                   <FontAwesomeIcon icon={faShoppingCart} /> Sepete Ekle
                 </button>
-                <button onClick={handleAddToFavorites}>
+                <button onClick={AddToChart}>
+                  <AddToChart></AddToChart>
                   <FontAwesomeIcon icon={faHeart} /> Favorilere Ekle 
                 </button>
                 <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
